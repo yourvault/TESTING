@@ -1,5 +1,17 @@
 [
     {
+        "id": "13",
+        "title": "ANA KANJEREB",
+        "author": "MED",
+        "description": "A science fiction epic set on the desert planet Arrakis, exploring power and destiny.",
+        "cover": "https://www.harryhartog.com.au/cdn/shop/products/9781473233959.jpg?v=1662056565",
+        "rating": 4.7,
+        "formats": ["PDF", "EPUB"],
+        "downloads": 0,
+        "category": "Fiction",
+        "downloadLink": "https://example.com/dune.pdf"
+    },
+    {
         "id": "11",
         "title": "Dune",
         "author": "Frank Herbert",
