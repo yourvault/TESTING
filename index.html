@@ -302,133 +302,32 @@
     <button class="back-to-top" onclick="scrollToTop()">↑</button>
 
     <script>
-        const books = [
-            {
-                id: '1',
-                title: "Harry Potter and the Sorcerer's Stone",
-                author: "J.K. Rowling",
-                description: "Discover the magical world of wizards in this enchanting adventure.",
-                cover: "https://via.placeholder.com/280x250?text=Harry+Potter+Cover",
-                rating: 4.8,
-                formats: ["PDF", "EPUB"],
-                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
-                category: "Fiction",
-                downloadLink: "https://example.com/harry-potter.pdf"
-            },
-            {
-                id: '2',
-                title: "The Lord of the Rings",
-                author: "J.R.R. Tolkien",
-                description: "Embark on an epic quest to destroy a powerful ring in Middle-earth.",
-                cover: "https://via.placeholder.com/280x250?text=Lord+of+the+Rings+Cover",
-                rating: 4.9,
-                formats: ["PDF", "EPUB"],
-                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
-                category: "Fiction",
-                downloadLink: "https://example.com/lord-of-the-rings.pdf"
-            },
-            {
-                id: '3',
-                title: "A Brief History of Time",
-                author: "Stephen Hawking",
-                description: "Explore the mysteries of the universe with this groundbreaking work.",
-                cover: "https://via.placeholder.com/280x250?text=A+Brief+History+of+Time+Cover",
-                rating: 4.7,
-                formats: ["PDF", "EPUB"],
-                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
-                category: "Science",
-                downloadLink: "https://example.com/brief-history-of-time.pdf"
-            },
-            {
-                id: '4',
-                title: "Sapiens: A Brief History of Humankind",
-                author: "Yuval Noah Harari",
-                description: "A sweeping narrative of humanity's history and evolution.",
-                cover: "https://via.placeholder.com/280x250?text=Sapiens+Cover",
-                rating: 4.8,
-                formats: ["PDF", "EPUB"],
-                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
-                category: "History",
-                downloadLink: "https://example.com/sapiens.pdf"
-            },
-            {
-                id: '5',
-                title: "1984",
-                author: "George Orwell",
-                description: "A dystopian novel exploring surveillance, truth, and totalitarianism.",
-                cover: "https://via.placeholder.com/280x250?text=1984+Cover",
-                rating: 4.9,
-                formats: ["PDF", "EPUB"],
-                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
-                category: "Fiction",
-                downloadLink: "https://example.com/1984.pdf"
-            },
-            {
-                id: '6',
-                title: "Pride and Prejudice",
-                author: "Jane Austen",
-                description: "A classic romance exploring love, class, and societal expectations.",
-                cover: "https://via.placeholder.com/280x250?text=Pride+and+Prejudice+Cover",
-                rating: 4.9,
-                formats: ["PDF", "EPUB"],
-                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
-                category: "Fiction",
-                downloadLink: "https://example.com/pride-and-prejudice.pdf"
-            },
-            {
-                id: '7',
-                title: "The Guns of August",
-                author: "Barbara W. Tuchman",
-                description: "A detailed account of the early days of World War I.",
-                cover: "https://via.placeholder.com/280x250?text=The+Guns+of+August+Cover",
-                rating: 4.8,
-                formats: ["PDF", "EPUB"],
-                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
-                category: "History",
-                downloadLink: "https://example.com/guns-of-august.pdf"
-            },
-            {
-                id: '8',
-                title: "The Selfish Gene",
-                author: "Richard Dawkins",
-                description: "A revolutionary look at evolution through the lens of gene selection.",
-                cover: "https://via.placeholder.com/280x250?text=The+Selfish+Gene+Cover",
-                rating: 4.7,
-                formats: ["PDF", "EPUB"],
-                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
-                category: "Science",
-                downloadLink: "https://example.com/selfish-gene.pdf"
-            },
-            {
-                id: '9',
-                title: "The Hobbit",
-                author: "J.R.R. Tolkien",
-                description: "A fantasy adventure following a hobbit on a quest for treasure.",
-                cover: "https://via.placeholder.com/280x250?text=The+Hobbit+Cover",
-                rating: 4.9,
-                formats: ["PDF", "EPUB"],
-                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
-                category: "Fiction",
-                downloadLink: "https://example.com/hobbit.pdf"
-            },
-            {
-                id: '10',
-                title: "The Diary of a Young Girl",
-                author: "Anne Frank",
-                description: "A poignant account of a Jewish girl's life in hiding during WWII.",
-                cover: "https://via.placeholder.com/280x250?text=The+Diary+of+a+Young+Girl+Cover",
-                rating: 4.8,
-                formats: ["PDF", "EPUB"],
-                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
-                category: "History",
-                downloadLink: "https://example.com/diary-of-a-young-girl.pdf"
-            }
-        ];
-
+        let books = [];
         const booksPerPage = 10;
         let currentPage = 1;
         let currentCategory = 'all';
-        let filteredBooks = books;
+        let filteredBooks = [];
+
+        // Fetch books from books.json and initialize with random download counts
+        fetch('books.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load books.json');
+                }
+                return response.json();
+            })
+            .then(data => {
+                books = data.map(book => ({
+                    ...book,
+                    downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297
+                }));
+                filteredBooks = books;
+                renderBooks();
+            })
+            .catch(error => {
+                console.error('Error loading books.json:', error);
+                document.getElementById('bookGrid').innerHTML = '<p>Error loading books. Please try again later.</p>';
+            });
 
         function renderBooks(page = 1) {
             const bookGrid = document.getElementById('bookGrid');
@@ -520,9 +419,6 @@
         });
 
         document.getElementById('searchInput').addEventListener('input', searchBooks);
-
-        // Initial render
-        renderBooks();
     </script>
 </body>
 </html>
