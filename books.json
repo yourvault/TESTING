@@ -1,15 +1,27 @@
 [
-        {
+    {
         "id": "11",
-        "title": "ANA RASS LAFTA",
-        "author": "ME",
-        "description": "JUST SOME BULLSHIT",
-        "cover": "https://via.placeholder.com/280x250?text=Harry+Potter+Cover",
-        "rating": 5,
+        "title": "Dune",
+        "author": "Frank Herbert",
+        "description": "A science fiction epic set on the desert planet Arrakis, exploring power and destiny.",
+        "cover": "https://via.placeholder.com/280x250?text=Dune+Cover",
+        "rating": 4.7,
         "formats": ["PDF", "EPUB"],
-        "downloads": 18302,
-        "category": "BIO",
-        "downloadLink": "https://example.com/harry-potter.pdf"
+        "downloads": 0,
+        "category": "Fiction",
+        "downloadLink": "https://example.com/dune.pdf"
+    },
+    {
+        "id": "12",
+        "title": "The Immortal Life of Henrietta Lacks",
+        "author": "Rebecca Skloot",
+        "description": "The true story of a woman's cells that revolutionized medical research.",
+        "cover": "https://via.placeholder.com/280x250?text=Henrietta+Lacks+Cover",
+        "rating": 4.6,
+        "formats": ["PDF", "EPUB"],
+        "downloads": 0,
+        "category": "Science",
+        "downloadLink": "https://example.com/henrietta-lacks.pdf"
     },
     {
         "id": "1",
