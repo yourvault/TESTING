@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elite Books Library</title>
+    <link rel="icon" href="https://your-logo-url.com/favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -46,6 +47,7 @@
             height: auto;
             display: block;
             margin: 0 auto 20px;
+            cursor: pointer;
         }
         header h1 {
             font-family: 'Playfair Display', serif;
@@ -140,7 +142,7 @@
             display: flex;
             flex-direction: column;
             animation: fadeIn 0.5s ease-in-out;
-            min-height: 500px; /* Ensure consistent card height */
+            min-height: 500px;
         }
         .card:hover {
             transform: translateY(-10px);
@@ -281,11 +283,15 @@
         .back-to-top:hover {
             transform: scale(1.1);
         }
+        .logo-link {
+            outline: none;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     <header>
-        <img src="" alt="Elite Books Library Logo" class="logo">
+        <a href="glxy.site" class="logo-link" target="_blank"><img src="https://postimg.cc/TyXCdwM5" alt="Elite Books Library Logo" class="logo"></a>
         <h1>Elite Books Library</h1>
         <button class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
         <div class="search-container">
