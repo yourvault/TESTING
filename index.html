@@ -88,12 +88,20 @@
             background: rgba(255, 255, 255, 0.25);
             transform: rotate(180deg);
         }
-        .search-container {
+        .controls-container {
             margin: 20px auto 0;
             max-width: 600px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .search-container, .category-container {
+            flex: 1;
+            min-width: 200px;
             position: relative;
         }
-        #searchInput {
+        #searchInput, #categorySelect {
             width: 100%;
             padding: 15px 40px 15px 20px;
             font-size: 1em;
@@ -107,11 +115,17 @@
                         linear-gradient(to right, #ff8c00, #ff2e63) border-box;
             transition: box-shadow 0.3s, transform 0.3s;
         }
-        #searchInput:focus {
+        body.dark-mode #searchInput, body.dark-mode #categorySelect {
+            background: linear-gradient(to right, #1f2937, #1f2937) padding-box,
+                        linear-gradient(to right, #ff8c00, #ff2e63) border-box;
+            color: var(--text-color);
+        }
+        #searchInput:focus, #categorySelect:focus {
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(245, 158, 11, 0.3);
             transform: scale(1.03);
+            outline: none;
         }
-        .search-icon {
+        .search-icon, .category-icon {
             position: absolute;
             right: 20px;
             top: 50%;
@@ -130,6 +144,10 @@
         @media (max-width: 768px) {
             .grid {
                 grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
+            .controls-container {
+                flex-direction: column;
+                align-items: center;
             }
         }
         .card {
@@ -215,12 +233,6 @@
             color: #777;
             font-size: 0.95em;
             margin: 10px 0;
-        }
-        .description {
-            margin: 20px 0;
-            font-size: 1.1em;
-            color: #555;
-            flex-grow: 1;
         }
         button {
             background: linear-gradient(to right, #ff8c00, #ff2e63);
@@ -344,9 +356,25 @@
     <header>
         <a href="https://glxy.site" class="logo-link"><img src="https://i.postimg.cc/5tXGmYsg/Elite-Books-Library-LOGO.png" alt="Elite Books Library Logo" class="logo"></a>
         <button class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search books by title, author, or description...">
-            <span class="search-icon">🔍</span>
+        <div class="controls-container">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search books by title, author, or description...">
+                <span class="search-icon">🔍</span>
+            </div>
+            <div class="category-container">
+                <select id="categorySelect" onchange="filterBooks(this.value)">
+                    <option value="all">All Categories</option>
+                    <option value="Fiction">Fiction</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Science">Science</option>
+                    <option value="History">History</option>
+                    <option value="Biography">Biography</option>
+                    <option value="Mystery">Mystery</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Philosophy">Philosophy</option>
+                </select>
+                <span class="category-icon">📚</span>
+            </div>
         </div>
     </header>
     <div class="grid" id="bookGrid"></div>
@@ -360,6 +388,7 @@
         let books = [];
         const booksPerPage = 10;
         let currentPage = 1;
+        let currentCategory = 'all';
         let filteredBooks = [];
 
         // Fetch books from books.json and initialize with random download counts
@@ -452,6 +481,13 @@
             }
         }
 
+        function filterBooks(category) {
+            currentCategory = category;
+            currentPage = 1;
+            filteredBooks = category === 'all' ? books : books.filter(book => book.category === category);
+            searchBooks();
+        }
+
         function searchBooks() {
             const filter = document.getElementById('searchInput').value.toLowerCase();
             filteredBooks = books.filter(book => 
@@ -459,6 +495,9 @@
                 book.author.toLowerCase().includes(filter) ||
                 book.description.toLowerCase().includes(filter)
             );
+            if (currentCategory !== 'all') {
+                filteredBooks = filteredBooks.filter(book => book.category === currentCategory);
+            }
             currentPage = 1;
             renderBooks(currentPage);
         }
