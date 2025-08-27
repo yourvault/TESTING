@@ -1,26 +1,14 @@
 [
     {
-        "id": "13",
-        "title": "ANA KANJEREB",
-        "author": "MED",
-        "description": "A science fiction epic set on the desert planet Arrakis, exploring power and destiny.",
-        "cover": "https://www.harryhartog.com.au/cdn/shop/products/9781473233959.jpg?v=1662056565",
-        "rating": 4.7,
-        "formats": ["PDF", "EPUB"],
-        "downloads": 0,
-        "category": "Fiction",
-        "downloadLink": "https://example.com/dune.pdf"
-    },
-    {
         "id": "11",
         "title": "Dune",
         "author": "Frank Herbert",
         "description": "A science fiction epic set on the desert planet Arrakis, exploring power and destiny.",
-        "cover": "https://www.harryhartog.com.au/cdn/shop/products/9781473233959.jpg?v=1662056565",
+        "cover": "https://via.placeholder.com/280x250?text=Dune+Cover",
         "rating": 4.7,
         "formats": ["PDF", "EPUB"],
         "downloads": 0,
-        "category": "Fiction",
+        "category": "Fantasy",
         "downloadLink": "https://example.com/dune.pdf"
     },
     {
@@ -32,7 +20,7 @@
         "rating": 4.6,
         "formats": ["PDF", "EPUB"],
         "downloads": 0,
-        "category": "Science",
+        "category": "Biography",
         "downloadLink": "https://example.com/henrietta-lacks.pdf"
     },
     {
@@ -44,7 +32,7 @@
         "rating": 4.8,
         "formats": ["PDF", "EPUB"],
         "downloads": 0,
-        "category": "Fiction",
+        "category": "Fantasy",
         "downloadLink": "https://example.com/harry-potter.pdf"
     },
     {
@@ -56,7 +44,7 @@
         "rating": 4.9,
         "formats": ["PDF", "EPUB"],
         "downloads": 0,
-        "category": "Fiction",
+        "category": "Fantasy",
         "downloadLink": "https://example.com/lord-of-the-rings.pdf"
     },
     {
@@ -104,7 +92,7 @@
         "rating": 4.9,
         "formats": ["PDF", "EPUB"],
         "downloads": 0,
-        "category": "Fiction",
+        "category": "Romance",
         "downloadLink": "https://example.com/pride-and-prejudice.pdf"
     },
     {
@@ -140,7 +128,7 @@
         "rating": 4.9,
         "formats": ["PDF", "EPUB"],
         "downloads": 0,
-        "category": "Fiction",
+        "category": "Fantasy",
         "downloadLink": "https://example.com/hobbit.pdf"
     },
     {
@@ -152,7 +140,7 @@
         "rating": 4.8,
         "formats": ["PDF", "EPUB"],
         "downloads": 0,
-        "category": "History",
+        "category": "Biography",
         "downloadLink": "https://example.com/diary-of-a-young-girl.pdf"
     }
 ]
