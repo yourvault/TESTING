@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +44,7 @@
         header {
             background: linear-gradient(135deg, var(--primary-color), #2c5282);
             color: #fff;
-            padding: 40px 20px 60px;
+            padding: 30px 20px 40px;
             text-align: center;
             position: relative;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -85,7 +84,7 @@
             transform: rotate(180deg);
         }
         .search-container {
-            margin: 30px auto 0;
+            margin: 20px auto 0;
             max-width: 600px;
             position: relative;
         }
@@ -110,52 +109,6 @@
             transform: translateY(-50%);
             color: #888;
             font-size: 1.2em;
-        }
-        .category-nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 10px 20px;
-            margin: 20px auto;
-            text-align: center;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            scroll-snap-type: x mandatory;
-            gap: 6px;
-            max-width: 100%;
-            min-width: 0;
-        }
-        .category-nav::-webkit-scrollbar {
-            height: 8px;
-        }
-        .category-nav::-webkit-scrollbar-thumb {
-            background: var(--secondary-color);
-            border-radius: 4px;
-        }
-        .category-nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 0.85em;
-            font-weight: 500;
-            transition: color 0.3s, transform 0.3s;
-            scroll-snap-align: start;
-            padding: 4px 8px;
-        }
-        .category-nav a:hover, .category-nav a.active {
-            color: var(--secondary-color);
-            transform: scale(1.1);
-        }
-        @media (max-width: 768px) {
-            .category-nav {
-                padding: 8px 10px;
-            }
-            .category-nav a {
-                font-size: 0.8em;
-                padding: 4px 8px;
-            }
         }
         .grid {
             display: grid;
@@ -214,6 +167,15 @@
             justify-content: space-between;
         }
         .card-content a {
+            text-decoration: none;
+            outline: none;
+        }
+        .card-content a:hover,
+        .card-content a:focus {
+            text-decoration: none;
+            outline: none;
+        }
+        .card-content a:-webkit-any-link {
             text-decoration: none;
         }
         .card h2 {
@@ -371,17 +333,6 @@
             <input type="text" id="searchInput" placeholder="Search books by title, author, or description...">
             <span class="search-icon">🔍</span>
         </div>
-        <nav class="category-nav">
-            <a href="#" onclick="filterBooks('all')" class="active">All</a>
-            <a href="#" onclick="filterBooks('Fiction')">Fiction</a>
-            <a href="#" onclick="filterBooks('Fantasy')">Fantasy</a>
-            <a href="#" onclick="filterBooks('Science')">Science</a>
-            <a href="#" onclick="filterBooks('History')">History</a>
-            <a href="#" onclick="filterBooks('Biography')">Biography</a>
-            <a href="#" onclick="filterBooks('Mystery')">Mystery</a>
-            <a href="#" onclick="filterBooks('Romance')">Romance</a>
-            <a href="#" onclick="filterBooks('Philosophy')">Philosophy</a>
-        </nav>
     </header>
     <div class="grid" id="bookGrid"></div>
     <div class="pagination" id="pagination"></div>
@@ -394,7 +345,6 @@
         let books = [];
         const booksPerPage = 10;
         let currentPage = 1;
-        let currentCategory = 'all';
         let filteredBooks = [];
 
         // Fetch books from books.json and initialize with random download counts
@@ -487,17 +437,6 @@
             }
         }
 
-        function filterBooks(category) {
-            currentCategory = category;
-            currentPage = 1;
-            filteredBooks = category === 'all' ? books : books.filter(book => book.category === category);
-            renderBooks(currentPage);
-
-            const links = document.querySelectorAll('.category-nav a');
-            links.forEach(link => link.classList.remove('active'));
-            document.querySelector(`.category-nav a[onclick="filterBooks('${category}')"]`).classList.add('active');
-        }
-
         function searchBooks() {
             const filter = document.getElementById('searchInput').value.toLowerCase();
             filteredBooks = books.filter(book => 
@@ -505,9 +444,6 @@
                 book.author.toLowerCase().includes(filter) ||
                 book.description.toLowerCase().includes(filter)
             );
-            if (currentCategory !== 'all') {
-                filteredBooks = filteredBooks.filter(book => book.category === currentCategory);
-            }
             currentPage = 1;
             renderBooks(currentPage);
         }
