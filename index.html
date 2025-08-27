@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elite Books Library</title>
-    <link rel="icon" href="https://i.postimg.cc/yWqYVCk4/Elite-Books-Library-2.png" type="image/png">
+    <link rel="icon" href="https://i.postimg.cc/5tXGmYsg/Elite-Books-Library-LOGO.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #e67e22;
+            --primary-color: #1a2b44;
+            --secondary-color: #f4a261;
             --text-color: #333;
-            --bg-color: #f9f7f5;
-            --card-bg: #fff;
-            --shadow-color: rgba(0, 0, 0, 0.1);
+            --bg-color: #f8fafc;
+            --card-bg: linear-gradient(145deg, #ffffff, #f0f0f0);
+            --shadow-color: rgba(0, 0, 0, 0.15);
         }
         body.dark-mode {
-            --primary-color: #ecf0f1;
-            --secondary-color: #f39c12;
-            --text-color: #ecf0f1;
-            --bg-color: #2c3e50;
-            --card-bg: #34495e;
-            --shadow-color: rgba(255, 255, 255, 0.1);
+            --primary-color: #d1d5db;
+            --secondary-color: #f4a261;
+            --text-color: #d1d5db;
+            --bg-color: #1f2a3c;
+            --card-bg: linear-gradient(145deg, #2d3748, #1f2a3c);
+            --shadow-color: rgba(255, 255, 255, 0.15);
         }
         body {
             font-family: 'Roboto', sans-serif;
@@ -29,32 +29,40 @@
             color: var(--text-color);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            line-height: 1.7;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         header {
-            background: linear-gradient(to bottom, var(--primary-color), #34495e);
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
             color: #fff;
-            padding: 60px 20px 80px;
+            padding: 80px 20px 100px;
             text-align: center;
             position: relative;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-            border-bottom-left-radius: 50% 20px;
-            border-bottom-right-radius: 50% 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-bottom-left-radius: 50% 30px;
+            border-bottom-right-radius: 50% 30px;
         }
         .logo {
-            max-width: 150px;
+            max-width: 160px;
             height: auto;
             display: block;
-            margin: 0 auto 20px;
+            margin: 0 auto 25px;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover {
+            animation: bounce 0.4s ease;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
         header h1 {
             font-family: 'Playfair Display', serif;
             margin: 0;
-            font-size: 3.5em;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+            font-size: 4em;
+            letter-spacing: 4px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
             animation: fadeInDown 1s ease-out;
         }
         @keyframes fadeInDown {
@@ -65,104 +73,127 @@
             position: absolute;
             top: 30px;
             right: 30px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             border: none;
             color: #fff;
             font-size: 1.8em;
             cursor: pointer;
-            padding: 10px;
+            padding: 12px;
             border-radius: 50%;
             transition: background 0.3s, transform 0.3s;
         }
         .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
             transform: rotate(180deg);
         }
         .search-container {
-            margin: 40px auto 0;
-            max-width: 800px;
+            margin: 50px auto 0;
+            max-width: 900px;
             position: relative;
         }
         #searchInput {
             width: 100%;
-            padding: 18px 50px 18px 20px;
-            font-size: 1.2em;
+            padding: 20px 50px 20px 25px;
+            font-size: 1.3em;
             border: none;
             border-radius: 50px;
             box-sizing: border-box;
-            box-shadow: 0 4px 10px var(--shadow-color);
+            box-shadow: 0 6px 15px var(--shadow-color);
             transition: box-shadow 0.3s, transform 0.3s;
         }
         #searchInput:focus {
-            box-shadow: 0 6px 15px var(--shadow-color);
+            box-shadow: 0 8px 20px var(--shadow-color);
             transform: scale(1.02);
         }
         .search-icon {
             position: absolute;
-            right: 20px;
+            right: 25px;
             top: 50%;
             transform: translateY(-50%);
             color: #888;
-            font-size: 1.4em;
+            font-size: 1.5em;
         }
         .category-nav {
-            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 15px 0;
+            margin: 25px auto;
             text-align: center;
+            scroll-behavior: smooth;
+        }
+        .category-nav::-webkit-scrollbar {
+            height: 8px;
+        }
+        .category-nav::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 4px;
         }
         .category-nav a {
             color: var(--text-color);
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 12px;
             font-size: 1.1em;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
         }
         .category-nav a:hover, .category-nav a.active {
             color: var(--secondary-color);
+            transform: scale(1.1);
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            max-width: 1400px;
-            margin: 0 auto 60px;
-            padding: 40px 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            max-width: 1500px;
+            margin: 0 auto 80px;
+            padding: 50px 20px;
         }
         @media (max-width: 768px) {
             .grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             }
         }
         .card {
-            background-color: var(--card-bg);
-            border-radius: 15px;
+            background: var(--card-bg);
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 6px 15px var(--shadow-color);
+            box-shadow: 0 8px 20px var(--shadow-color);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
             display: flex;
             flex-direction: column;
-            animation: fadeIn 0.5s ease-in-out;
-            min-height: 500px;
+            min-height: 520px;
+            will-change: transform, opacity;
         }
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 25px var(--shadow-color);
+            transform: translateY(-15px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
-        @keyframes fadeIn {
+        .card.reveal {
+            animation: scrollReveal 0.6s ease-out forwards;
+        }
+        @keyframes scrollReveal {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
         .card img {
             width: 100%;
-            height: 250px;
+            height: 260px;
             object-fit: cover;
-            transition: transform 0.3s;
+            transition: transform 0.4s ease;
         }
         .card:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
         .card-content {
-            padding: 25px;
+            padding: 30px;
             flex-grow: 1;
             text-align: center;
             display: flex;
@@ -171,106 +202,127 @@
         }
         .card h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6em;
-            margin: 0 0 10px;
+            font-size: 1.8em;
+            margin: 0 0 12px;
             color: var(--text-color);
+            text-shadow: 1px 1px 2px var(--shadow-color);
         }
         .author {
             font-style: italic;
-            color: #777;
+            color: #666;
             margin-bottom: 15px;
-            font-size: 0.95em;
+            font-size: 1em;
         }
         .stars {
             color: var(--secondary-color);
-            font-size: 1.2em;
+            font-size: 1.3em;
         }
         .rating {
             font-weight: 500;
-            margin-left: 8px;
+            margin-left: 10px;
             color: var(--text-color);
         }
         .formats {
-            color: #888;
-            font-size: 0.9em;
-            margin: 8px 0;
+            color: #777;
+            font-size: 0.95em;
+            margin: 10px 0;
         }
         .description {
-            margin: 15px 0;
-            font-size: 1em;
+            margin: 20px 0;
+            font-size: 1.1em;
             color: #555;
             flex-grow: 1;
         }
         button {
-            background: linear-gradient(to right, var(--secondary-color), #d35400);
+            background: linear-gradient(to right, #f4a261, #e76f51);
             color: #fff;
             border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
+            padding: 14px 30px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: 500;
-            transition: background 0.3s ease, transform 0.3s;
-            margin: 10px auto;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 15px auto;
             display: block;
             text-decoration: none;
         }
         button:hover {
-            background: linear-gradient(to right, #f39c12, #e67e22);
-            transform: scale(1.05);
+            background: linear-gradient(to right, #e76f51, #f4a261);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         .downloads {
-            margin-top: 15px;
-            font-size: 0.9em;
+            margin-top: 20px;
+            font-size: 0.95em;
             color: #666;
         }
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 30px 0;
+            margin: 40px 0;
         }
         .pagination button {
             background: var(--primary-color);
-            margin: 0 5px;
-            padding: 10px 15px;
-            border-radius: 5px;
+            margin: 0 8px;
+            padding: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             font-size: 1em;
             color: #fff;
             border: none;
             cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
         }
         .pagination button.active {
             background: var(--secondary-color);
+            transform: scale(1.2);
+        }
+        .pagination button:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        .pagination button.fade-in {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         footer {
-            background: linear-gradient(to top, var(--primary-color), #34495e);
+            background: linear-gradient(to top, var(--primary-color), #2c5282);
             color: #fff;
             text-align: center;
-            padding: 50px 20px;
+            padding: 60px 20px;
             font-size: 1em;
-            box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.2);
-            border-top-left-radius: 50% 20px;
-            border-top-right-radius: 50% 20px;
+            box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.2);
+            border-top-left-radius: 50% 30px;
+            border-top-right-radius: 50% 30px;
         }
         footer .copyright {
             margin: 0;
             font-family: 'Playfair Display', serif;
-            font-size: 1.2em;
-            letter-spacing: 1px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            font-size: 1.3em;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        footer .copyright:hover {
+            transform: scale(1.05);
         }
         .hidden {
             display: none;
         }
         .back-to-top {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             background: var(--secondary-color);
             color: #fff;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 18px;
             border-radius: 50%;
             cursor: pointer;
             display: none;
@@ -281,7 +333,7 @@
             opacity: 1;
         }
         .back-to-top:hover {
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
         .logo-link {
             outline: none;
@@ -291,7 +343,7 @@
 </head>
 <body>
     <header>
-        <a href="https://weread.site" class="logo-link"><img src="https://i.postimg.cc/yWqYVCk4/Elite-Books-Library-2.png" alt="Elite Books Library Logo" class="logo"></a>
+        <a href="https://glxy.site" class="logo-link"><img src="https://i.postimg.cc/5tXGmYsg/Elite-Books-Library-LOGO.png" alt="Elite Books Library Logo" class="logo"></a>
         <h1>Elite Books Library</h1>
         <button class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
         <div class="search-container">
@@ -301,8 +353,13 @@
         <nav class="category-nav">
             <a href="#" onclick="filterBooks('all')" class="active">All</a>
             <a href="#" onclick="filterBooks('Fiction')">Fiction</a>
+            <a href="#" onclick="filterBooks('Fantasy')">Fantasy</a>
             <a href="#" onclick="filterBooks('Science')">Science</a>
             <a href="#" onclick="filterBooks('History')">History</a>
+            <a href="#" onclick="filterBooks('Biography')">Biography</a>
+            <a href="#" onclick="filterBooks('Mystery')">Mystery</a>
+            <a href="#" onclick="filterBooks('Romance')">Romance</a>
+            <a href="#" onclick="filterBooks('Philosophy')">Philosophy</a>
         </nav>
     </header>
     <div class="grid" id="bookGrid"></div>
@@ -347,9 +404,11 @@
             const end = start + booksPerPage;
             const booksToShow = filteredBooks.slice(start, end);
 
-            booksToShow.forEach(book => {
+            booksToShow.forEach((book, index) => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.style.animation = 'zoomIn 0.5s ease-out';
                 card.innerHTML = `
                     <img src="${book.cover}" alt="${book.title} Cover">
                     <div class="card-content">
@@ -372,6 +431,20 @@
                 bookGrid.style.display = 'grid';
             }, 0);
 
+            // Setup scroll reveal observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+
             renderPagination();
         }
 
@@ -383,7 +456,8 @@
             for (let i = 1; i <= pageCount; i++) {
                 const btn = document.createElement('button');
                 btn.textContent = i;
-                btn.className = i === currentPage ? 'active' : '';
+                btn.className = i === currentPage ? 'active fade-in' : 'fade-in';
+                btn.style.animationDelay = `${(i - 1) * 0.2}s`;
                 btn.addEventListener('click', () => {
                     currentPage = i;
                     renderBooks(currentPage);
