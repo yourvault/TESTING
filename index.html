@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Books Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e67e22;
+            --text-color: #333;
+            --bg-color: #f9f7f5;
+            --card-bg: #fff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+        body.dark-mode {
+            --primary-color: #ecf0f1;
+            --secondary-color: #f39c12;
+            --text-color: #ecf0f1;
+            --bg-color: #2c3e50;
+            --card-bg: #34495e;
+            --shadow-color: rgba(255, 255, 255, 0.1);
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        header {
+            background: linear-gradient(to bottom, var(--primary-color), #34495e);
+            color: #fff;
+            padding: 60px 20px 80px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            border-bottom-left-radius: 50% 20px;
+            border-bottom-right-radius: 50% 20px;
+        }
+        .logo {
+            max-width: 150px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+        }
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            font-size: 3.5em;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+            animation: fadeInDown 1s ease-out;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            font-size: 1.8em;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(180deg);
+        }
+        .search-container {
+            margin: 40px auto 0;
+            max-width: 800px;
+            position: relative;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 18px 50px 18px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        #searchInput:focus {
+            box-shadow: 0 6px 15px var(--shadow-color);
+            transform: scale(1.02);
+        }
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            font-size: 1.4em;
+        }
+        .category-nav {
+            margin: 20px auto;
+            text-align: center;
+        }
+        .category-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .category-nav a:hover, .category-nav a.active {
+            color: var(--secondary-color);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 60px;
+            padding: 40px 20px;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px var(--shadow-color);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px var(--shadow-color);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .card:hover img {
+            transform: scale(1.05);
+        }
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6em;
+            margin: 0 0 10px;
+            color: var(--text-color);
+        }
+        .author {
+            font-style: italic;
+            color: #777;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+        .stars {
+            color: var(--secondary-color);
+            font-size: 1.2em;
+        }
+        .rating {
+            font-weight: 500;
+            margin-left: 8px;
+            color: var(--text-color);
+        }
+        .formats {
+            color: #888;
+            font-size: 0.9em;
+            margin: 8px 0;
+        }
+        .description {
+            margin: 15px 0;
+            font-size: 1em;
+            color: #555;
+        }
+        button {
+            background: linear-gradient(to right, var(--secondary-color), #d35400);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.3s;
+            margin: 10px auto;
+            display: block;
+            text-decoration: none;
+        }
+        button:hover {
+            background: linear-gradient(to right, #f39c12, #e67e22);
+            transform: scale(1.05);
+        }
+        .downloads {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+        .pagination button {
+            background: var(--primary-color);
+            margin: 0 5px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .pagination button.active {
+            background: var(--secondary-color);
+        }
+        footer {
+            background: linear-gradient(to top, var(--primary-color), #34495e);
+            color: #fff;
+            text-align: center;
+            padding: 50px 20px;
+            font-size: 1em;
+            box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.2);
+            border-top-left-radius: 50% 20px;
+            border-top-right-radius: 50% 20px;
+        }
+        footer .copyright {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        .hidden {
+            display: none;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--secondary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .back-to-top.show {
+            display: block;
+            opacity: 1;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="" alt="Elite Books Library Logo" class="logo">
+        <h1>Elite Books Library</h1>
+        <button class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search books by title, author, or description...">
+            <span class="search-icon">🔍</span>
+        </div>
+        <nav class="category-nav">
+            <a href="#" onclick="filterBooks('all')" class="active">All</a>
+            <a href="#" onclick="filterBooks('Fiction')">Fiction</a>
+            <a href="#" onclick="filterBooks('Science')">Science</a>
+            <a href="#" onclick="filterBooks('History')">History</a>
+        </nav>
+    </header>
+    <div class="grid" id="bookGrid"></div>
+    <div class="pagination" id="pagination"></div>
+    <footer>
+        <p class="copyright">© 2025 ELITEBOOKS.SITE - All rights reserved.</p>
+    </footer>
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        const books = [
+            {
+                id: '1',
+                title: "Harry Potter and the Sorcerer's Stone",
+                author: "J.K. Rowling",
+                description: "Discover the magical world of wizards in this enchanting adventure.",
+                cover: "https://via.placeholder.com/280x250?text=Harry+Potter+Cover",
+                rating: 4.8,
+                formats: ["PDF", "EPUB"],
+                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
+                category: "Fiction",
+                downloadLink: "https://example.com/harry-potter.pdf"
+            },
+            {
+                id: '2',
+                title: "The Lord of the Rings",
+                author: "J.R.R. Tolkien",
+                description: "Embark on an epic quest to destroy a powerful ring in Middle-earth.",
+                cover: "https://via.placeholder.com/280x250?text=Lord+of+the+Rings+Cover",
+                rating: 4.9,
+                formats: ["PDF", "EPUB"],
+                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
+                category: "Fiction",
+                downloadLink: "https://example.com/lord-of-the-rings.pdf"
+            },
+            {
+                id: '3',
+                title: "A Brief History of Time",
+                author: "Stephen Hawking",
+                description: "Explore the mysteries of the universe with this groundbreaking work.",
+                cover: "https://via.placeholder.com/280x250?text=A+Brief+History+of+Time+Cover",
+                rating: 4.7,
+                formats: ["PDF", "EPUB"],
+                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
+                category: "Science",
+                downloadLink: "https://example.com/brief-history-of-time.pdf"
+            },
+            {
+                id: '4',
+                title: "Sapiens: A Brief History of Humankind",
+                author: "Yuval Noah Harari",
+                description: "A sweeping narrative of humanity's history and evolution.",
+                cover: "https://via.placeholder.com/280x250?text=Sapiens+Cover",
+                rating: 4.8,
+                formats: ["PDF", "EPUB"],
+                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
+                category: "History",
+                downloadLink: "https://example.com/sapiens.pdf"
+            },
+            {
+                id: '5',
+                title: "1984",
+                author: "George Orwell",
+                description: "A dystopian novel exploring surveillance, truth, and totalitarianism.",
+                cover: "https://via.placeholder.com/280x250?text=1984+Cover",
+                rating: 4.9,
+                formats: ["PDF", "EPUB"],
+                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
+                category: "Fiction",
+                downloadLink: "https://example.com/1984.pdf"
+            },
+            {
+                id: '6',
+                title: "Pride and Prejudice",
+                author: "Jane Austen",
+                description: "A classic romance exploring love, class, and societal expectations.",
+                cover: "https://via.placeholder.com/280x250?text=Pride+and+Prejudice+Cover",
+                rating: 4.9,
+                formats: ["PDF", "EPUB"],
+                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
+                category: "Fiction",
+                downloadLink: "https://example.com/pride-and-prejudice.pdf"
+            },
+            {
+                id: '7',
+                title: "The Guns of August",
+                author: "Barbara W. Tuchman",
+                description: "A detailed account of the early days of World War I.",
+                cover: "https://via.placeholder.com/280x250?text=The+Guns+of+August+Cover",
+                rating: 4.8,
+                formats: ["PDF", "EPUB"],
+                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
+                category: "History",
+                downloadLink: "https://example.com/guns-of-august.pdf"
+            },
+            {
+                id: '8',
+                title: "The Selfish Gene",
+                author: "Richard Dawkins",
+                description: "A revolutionary look at evolution through the lens of gene selection.",
+                cover: "https://via.placeholder.com/280x250?text=The+Selfish+Gene+Cover",
+                rating: 4.7,
+                formats: ["PDF", "EPUB"],
+                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
+                category: "Science",
+                downloadLink: "https://example.com/selfish-gene.pdf"
+            },
+            {
+                id: '9',
+                title: "The Hobbit",
+                author: "J.R.R. Tolkien",
+                description: "A fantasy adventure following a hobbit on a quest for treasure.",
+                cover: "https://via.placeholder.com/280x250?text=The+Hobbit+Cover",
+                rating: 4.9,
+                formats: ["PDF", "EPUB"],
+                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
+                category: "Fiction",
+                downloadLink: "https://example.com/hobbit.pdf"
+            },
+            {
+                id: '10',
+                title: "The Diary of a Young Girl",
+                author: "Anne Frank",
+                description: "A poignant account of a Jewish girl's life in hiding during WWII.",
+                cover: "https://via.placeholder.com/280x250?text=The+Diary+of+a+Young+Girl+Cover",
+                rating: 4.8,
+                formats: ["PDF", "EPUB"],
+                downloads: Math.floor(Math.random() * (19364 - 7297 + 1)) + 7297,
+                category: "History",
+                downloadLink: "https://example.com/diary-of-a-young-girl.pdf"
+            }
+        ];
+
+        const booksPerPage = 10;
+        let currentPage = 1;
+        let currentCategory = 'all';
+        let filteredBooks = books;
+
+        function renderBooks(page = 1) {
+            const bookGrid = document.getElementById('bookGrid');
+            bookGrid.innerHTML = '';
+            const start = (page - 1) * booksPerPage;
+            const end = start + booksPerPage;
+            const booksToShow = filteredBooks.slice(start, end);
+
+            booksToShow.forEach(book => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${book.cover}" alt="${book.title} Cover">
+                    <div class="card-content">
+                        <h2>${book.title}</h2>
+                        <p class="author">by ${book.author}</p>
+                        <div><span class="stars">★★★★★</span><span class="rating">${book.rating}</span></div>
+                        <div class="formats">Available in ${book.formats.join(' & ')}</div>
+                        <p class="description">${book.description}</p>
+                        <a href="${book.downloadLink}" target="_blank"><button>Download Now</button></a>
+                        <p class="downloads">Downloads: <span id="dl-${book.id}">${book.downloads}</span></p>
+                    </div>
+                `;
+                bookGrid.appendChild(card);
+            });
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            const pageCount = Math.ceil(filteredBooks.length / booksPerPage);
+
+            for (let i = 1; i <= pageCount; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = i === currentPage ? 'active' : '';
+                btn.addEventListener('click', () => {
+                    currentPage = i;
+                    renderBooks(currentPage);
+                });
+                pagination.appendChild(btn);
+            }
+        }
+
+        function filterBooks(category) {
+            currentCategory = category;
+            currentPage = 1;
+            filteredBooks = category === 'all' ? books : books.filter(book => book.category === category);
+            renderBooks(currentPage);
+
+            const links = document.querySelectorAll('.category-nav a');
+            links.forEach(link => link.classList.remove('active'));
+            document.querySelector(`.category-nav a[onclick="filterBooks('${category}')"]`).classList.add('active');
+        }
+
+        function searchBooks() {
+            const filter = document.getElementById('searchInput').value.toLowerCase();
+            filteredBooks = books.filter(book => 
+                book.title.toLowerCase().includes(filter) ||
+                book.author.toLowerCase().includes(filter) ||
+                book.description.toLowerCase().includes(filter)
+            );
+            if (currentCategory !== 'all') {
+                filteredBooks = filteredBooks.filter(book => book.category === currentCategory);
+            }
+            currentPage = 1;
+            renderBooks(currentPage);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const toggleBtn = document.querySelector('.theme-toggle');
+            toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        document.getElementById('searchInput').addEventListener('input', searchBooks);
+
+        // Initial render
+        renderBooks();
+    </script>
+</body>
+</html>
