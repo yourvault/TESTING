@@ -140,6 +140,7 @@
             display: flex;
             flex-direction: column;
             animation: fadeIn 0.5s ease-in-out;
+            min-height: 500px; /* Ensure consistent card height */
         }
         .card:hover {
             transform: translateY(-10px);
@@ -162,6 +163,9 @@
             padding: 25px;
             flex-grow: 1;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .card h2 {
             font-family: 'Playfair Display', serif;
@@ -193,6 +197,7 @@
             margin: 15px 0;
             font-size: 1em;
             color: #555;
+            flex-grow: 1;
         }
         button {
             background: linear-gradient(to right, var(--secondary-color), #d35400);
@@ -353,6 +358,13 @@
                 `;
                 bookGrid.appendChild(card);
             });
+
+            // Force a repaint to ensure consistent rendering
+            setTimeout(() => {
+                bookGrid.style.display = 'none';
+                bookGrid.offsetHeight; // Trigger reflow
+                bookGrid.style.display = 'grid';
+            }, 0);
 
             renderPagination();
         }
