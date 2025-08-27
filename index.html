@@ -23,6 +23,15 @@
             --card-bg: linear-gradient(145deg, #2d3748, #1f2a3c);
             --shadow-color: rgba(255, 255, 255, 0.15);
         }
+        body.dark-mode button {
+            border: 2px solid transparent;
+        }
+        body.dark-mode button:hover {
+            border-color: #ff2e63;
+        }
+        body.dark-mode button:focus {
+            border-color: #ff8c00;
+        }
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--bg-color);
@@ -35,7 +44,7 @@
         header {
             background: linear-gradient(135deg, var(--primary-color), #2c5282);
             color: #fff;
-            padding: 60px 20px 80px;
+            padding: 40px 20px 60px;
             text-align: center;
             position: relative;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -56,18 +65,6 @@
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-5px); }
-        }
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            margin: 0;
-            font-size: 2.5em;
-            letter-spacing: 2px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-            animation: fadeInDown 1s ease-out;
-        }
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         .theme-toggle {
             position: absolute;
@@ -115,7 +112,7 @@
         }
         .category-nav {
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
             flex-wrap: nowrap;
             overflow-x: auto;
@@ -237,23 +234,29 @@
             flex-grow: 1;
         }
         button {
-            background: linear-gradient(to right, #f4a261, #e76f51);
+            background: linear-gradient(to right, #ff8c00, #ff2e63);
             color: #fff;
-            border: none;
-            padding: 14px 30px;
+            border: 2px solid #fff;
+            padding: 16px 35px;
             border-radius: 50px;
             cursor: pointer;
             font-size: 1.2em;
             font-weight: 500;
-            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             margin: 15px auto;
             display: block;
             text-decoration: none;
+            outline: none;
         }
         button:hover {
-            background: linear-gradient(to right, #e76f51, #f4a261);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, #ff2e63, #ff8c00);
+            transform: translateY(-3px) rotate(2deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff2e63;
+        }
+        button:focus {
+            outline: none;
+            border-color: #ff8c00;
         }
         .downloads {
             margin-top: 20px;
@@ -347,7 +350,6 @@
 <body>
     <header>
         <a href="https://glxy.site" class="logo-link"><img src="https://i.postimg.cc/5tXGmYsg/Elite-Books-Library-LOGO.png" alt="Elite Books Library Logo" class="logo"></a>
-        <h1>Elite Books Library</h1>
         <button class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Search books by title, author, or description...">
